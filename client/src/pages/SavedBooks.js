@@ -7,7 +7,7 @@ import {
   Button,
 } from 'react-bootstrap';
 
-
+import { useMutation } from '@apollo/client';
 // TODO:  import the two hooks from Apollo Client you'll be using below
 import { QUERY_ME } from '../utils/queries';
 import { REMOVE_BOOK } from '../utils/mutations';
@@ -16,6 +16,9 @@ import { removeBookId } from '../utils/localStorage';
 import Auth from '../utils/auth';
 
 const SavedBooks = () => {
+  
+  const { me } = cache.readQuery({ query: QUERY_ME });
+  cache.writeQuery
   // TODO: Call the QUERY_ME query and destructure the loading and data response properties
   const [removeBook, { error }] = useMutation(REMOVE_BOOK);
 
