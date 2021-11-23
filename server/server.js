@@ -9,7 +9,11 @@ const db = require('./config/connection');
 const PORT = process.env.PORT || 3001;
 const app = express();
 
-// TODO: Instantiate the Apollo server middleware, and be sure to add the authMiddleware as well
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  context: authMiddleware,
+});
 
 server.applyMiddleware({ app });
 
