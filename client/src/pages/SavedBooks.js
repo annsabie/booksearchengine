@@ -7,9 +7,8 @@ import {
   Button,
 } from 'react-bootstrap';
 
-import { useMutation } from '@apollo/client';
-// TODO:  import the two hooks from Apollo Client you'll be using below
-import { QUERY_ME } from '../utils/queries';
+import { QUERY_ME } from "../utils/queries"
+import { useMutation, useQuery } from '@apollo/client';
 import { REMOVE_BOOK } from '../utils/mutations';
 import { removeBookId } from '../utils/localStorage';
 
@@ -17,12 +16,15 @@ import Auth from '../utils/auth';
 
 const SavedBooks = () => {
   
-  const { me } = cache.readQuery({ query: QUERY_ME });
-  cache.writeQuery
-  // TODO: Call the QUERY_ME query and destructure the loading and data response properties
-  const [removeBook, { error }] = useMutation(REMOVE_BOOK);
+ const { loading, error, data } = useQuery(QUERY_ME, {
+   fetchPolicy: 'network-only'
+ });
 
-  const userData = data?.me || {};
+ const userData = data?.me || [];
+
+ console.log(userData);
+  
+const [removeBook] = useMutation(REMOVE_BOOK);
 
   // create function that accepts the book's mongo _id value as param and deletes the book from the database
   const handleDeleteBook = async (bookId) => {
